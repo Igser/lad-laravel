@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\User;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-use Illuminate\Foundation\Configuration\Middleware;
 
-Route::get('/', function () {
-    return view('welcome', ['title' => 'Welcome Page']);
-})->name('welcome');
-
-Route::match(['get', 'post'], '/', function () {
-    return view('home', ['title' => 'Home Page']);
-})->name('home');
+Route::middleware([EnsureTokenIsValid::class])->group(function () {
+    Route::get('/', function () {
+        return view('welcome', ['title' => 'Welcome Page']);
+    })
+        ->name('welcome')
+        ->middleware([\App\Http\Middleware\EnsureTokenIsValid::class]);
+});
 
 Route::get('/posts/{id}', [Controllers\PostController::class, 'detail'])
     ->where(['id' => '[0-9]+'])
@@ -29,32 +29,29 @@ Route::get('/search/{search}', function (string $search) {
     return 'Searching';
 })->where(['search' => '.*']);
 
-Route::redirect('/blog', '/posts', 301);
+Route::post('/login', function (string $search) {
+    return 'Login page';
+})->name('name');
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return 'Admin main page';
-    });
+Route::prefix('admin')->group(function() {
+    Route::middleware(['admin', 'role:admin'])->group(function () {
+        Route::get('/', function () {
+            return 'Admin main page';
+        });
 
-    Route::get('/posts', function () {
-        return 'Admin posts page';
-    });
+        Route::get('/posts', function () {
+            return 'Admin posts page';
+        });
 
-    Route::get('/posts/{id}', function (int $id) {
-        return 'Admin posts' . $id;
+        Route::get('/posts/{id}', function (int $id) {
+            return 'Admin post page' . $id;
+        });
     });
 });
 
-Route::controller(Controllers\OrderController::class)->group(function () {
-    Route::get('/orders/{id}', 'show');
-    Route::post('/orders', 'store');
-});
 
-Route::get('/users/{user}', function (User $user) {
-
-});
+Route::resource('users', Controllers\UserController::class);
 
 Route::fallback(function () {
     abort(404, '404 Page not found');
-    //return response('404 Page not found', 404);
 });

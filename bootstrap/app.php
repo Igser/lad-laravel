@@ -20,5 +20,5 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(new \App\Http\Middleware\AppMiddleware())
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+
     })->create();
