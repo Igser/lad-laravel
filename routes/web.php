@@ -16,6 +16,10 @@ Route::middleware([EnsureTokenIsValid::class])->group(function () {
         ->middleware([\App\Http\Middleware\EnsureTokenIsValid::class]);
 });
 
+Route::get('/tasks', function () {
+    return view('layout.site');
+});
+
 Route::get('/posts/{id}', [Controllers\PostController::class, 'detail'])
     ->where(['id' => '[0-9]+'])
     ->missing(fn(Request $request) => Redirect::route('welcome'));

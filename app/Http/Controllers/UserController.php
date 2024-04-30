@@ -2,10 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckRole;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(CheckRole::class, only: [
+                'create',
+                'store',
+                'edit',
+                'update',
+                'destroy'
+            ])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
