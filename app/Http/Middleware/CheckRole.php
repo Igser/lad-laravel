@@ -15,7 +15,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if ($role) {
+        if ($request->is('admin/*') && $role) {
             dd(['CheckRole params', $role]);
         }
 
