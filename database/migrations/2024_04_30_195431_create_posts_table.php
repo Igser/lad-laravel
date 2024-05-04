@@ -24,20 +24,20 @@ return new class extends Migration
             $table->timestamps();
 
             // внешний ключ, ссылается на поле id таблицы users
-            $table->foreign('user_id')
+            /*$table->foreign('user_id')
                 ->references('id')
                 ->on('brands')
-                ->nullOnDelete();
+                ->nullOnDelete();*/
             // внешний ключ, ссылается на поле id таблицы users
             $table->foreign('published_by')
                 ->references('id')
                 ->on('users')
                 ->nullOnDelete();
             // внешний ключ, ссылается на поле id таблицы categories
-            $table->foreign('category_id')
+            /*$table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
-                ->nullOnDelete();
+                ->nullOnDelete();*/
         });
     }
 

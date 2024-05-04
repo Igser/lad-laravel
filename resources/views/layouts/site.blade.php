@@ -8,6 +8,7 @@
     <title>{{ $title ?? env('APP_NAME') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
@@ -44,17 +45,17 @@
             <ul class="navbar-nav ml-auto">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.login') }}">Войти</a>
+                        <a class="nav-link" href="">Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.register') }}">Регистрация</a>
+                        <a class="nav-link" href="">Регистрация</a>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.index') }}">Личный кабинет</a>
+                        <a class="nav-link" href="">Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.logout') }}">Выйти</a>
+                        <a class="nav-link" href="">Выйти</a>
                     </li>
                 @endif
             </ul>
