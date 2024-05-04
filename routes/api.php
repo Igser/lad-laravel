@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,4 @@ Route::get('/info', function (Request $request) {
 Route::post('/info', function (Request $request) {
     dd($request);
 });
+Route::resource('/users', UserController::class);

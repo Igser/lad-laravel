@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // Возвращает uri запроса
+        /*// Возвращает uri запроса
         $uri = $request->path();
         //dd($uri);
 
@@ -128,6 +128,37 @@ class UserController extends Controller
         $request->whenFilled('name', function (string $input) {
             //dd(true);
         });
+
+
+        $file = $request->file('file');
+
+
+        if ($request->hasFile('photo')) {
+            // ...
+        }
+
+
+        if ($request->file('photo')->isValid()) {
+            // ...
+        }*/
+
+
+        $path = $request->file('photo')->path();
+
+        $extension = $request->file('photo')->extension();
+
+        $path = $request->file('photo')->store('images');
+
+        $path = $request->file('photo')->storeAs('images', 'filename.jpg');
+
+        $request->validate([
+            'name'  => ['required', 'string'],
+            'age'   => ['numeric', 'nullable'],
+            'file'  => ['required', 'file', 'mimes:jpg,png'],
+            'email' => ['required', 'email:dns']
+        ], [
+            'name.required' => 'Имя обязательно для заполнения'
+        ]);
     }
 
     /**
